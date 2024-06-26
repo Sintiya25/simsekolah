@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\Jurusan;
 
 class StudentController extends Controller
 {
@@ -16,8 +17,8 @@ class StudentController extends Controller
         //return 'Hallo Peserta Diklat';
 
         //ini contoh return text
-        $data['students'] = Student::all(); // select * from student
-        return view('student.index', $data);
+        $data['students'] = Student::with('jurusan')->get(); // select * from student
+        return view('student.index',$data);
 
     }
 
@@ -26,7 +27,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('student.create');
+        $data['jurusan'] = Jurusan::all();
+        return view('student.create',$data);
         //
     }
 
@@ -43,6 +45,7 @@ class StudentController extends Controller
         $student->name = $request->name;
         $student->nis = $request->nis;
         $student->birth_date = $request->birth_date;
+        $student->jurusan_id = $request->jurusan_id;
         $student->save();
         //melakukan redirect ke daftar siswa dan menampilkan alert
         return redirect('student')->with('message','Berhasil Menambahkan Data');
