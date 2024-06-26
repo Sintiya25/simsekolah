@@ -19,22 +19,23 @@
             <th>Nomor</th>
             <th>NIS</th>
             <th>Nama</th>
+            <th>Jurusan</th>
             <th>Tanggal Lahir</th>
-            <th colspan="2" width="48"> Action</th>
+            <th colspan="2" width="40">Action</th>
         </tr>
         @foreach($students as $student)
         <tr>
             <td>{{ $loop->iteration}}</td>
             <td>{{ $student->nis}}</td>
             <td>{{ $student->name}}</td>
+            <td>{{ $student->jurusan->nama_jurusan}}</td>
             <td>{{ $student->birth_date}}</td>
             <td>
                 <a href="/student/{{ $student->id }}/edit" class="btn btn-danger">Edit</a>
             </td>
             <td>
                 <form action="/student/{{ $student->id }}" method="POST">
-                    <input type="hidden" name="_method" value="DELETE">
-                    
+                <input type="hidden" name="_method" value="DELETE">
                 @csrf
                 <button type="submit" class="btn btn-primary">Delete</button>
                 </form>
